@@ -100,8 +100,8 @@ const DepartmentHomepage: React.FC<DepartmentHomepageProps> = ({ department, onT
         <div className="relative z-10 flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
           <div className="max-w-4xl mx-auto animate-gentle-fade-in">
             {/* Welcome Illustration */}
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-800 dark:to-pink-800 border-4 border-white/50 dark:border-slate-700/50 flex items-center justify-center mb-8 mx-auto soft-shadow">
-              <span className="text-6xl">📖</span>
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-800 dark:to-pink-800 border-4 border-white/50 dark:border-slate-700/50 flex items-center justify-center mb-8 mx-auto soft-shadow hover:scale-110 transition-transform duration-300 cursor-pointer group">
+              <span className="text-6xl group-hover:animate-bounce">📖</span>
             </div>
             
             {/* Main Title - Personalized */}
@@ -125,7 +125,7 @@ const DepartmentHomepage: React.FC<DepartmentHomepageProps> = ({ department, onT
 
             {/* Department Description */}
             {department.description && (
-              <div className="mb-12 p-6 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700/20">
+              <div className="mb-12 p-6 bg-transparent border-2 border-blue-500/60 rounded-2xl soft-shadow">
                 <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed">
                   {department.description}
                 </p>
@@ -133,35 +133,35 @@ const DepartmentHomepage: React.FC<DepartmentHomepageProps> = ({ department, onT
             )}
 
             {/* Department Info Card */}
-            <div className="mb-12 p-6 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700/20">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Building className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+            <div className="mb-12 p-8 bg-transparent border-2 border-purple-500/60 rounded-3xl soft-shadow hover:soft-shadow-hover transition-all duration-300 hover:scale-105">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="text-center group">
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Building className="h-10 w-10 text-blue-600 dark:text-blue-400" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2">Department Code</h3>
-                  <p className="text-slate-600 dark:text-slate-300 font-mono text-lg">{department.code}</p>
+                  <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-3">Department Code</h3>
+                  <p className="text-slate-600 dark:text-slate-300 font-mono text-xl bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-lg inline-block">{department.code}</p>
                 </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl">🔗</span>
+                <div className="text-center group">
+                  <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/40 dark:to-purple-800/40 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <span className="text-3xl">🔗</span>
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-800 dark:text-white mb-2">Department Slug</h3>
-                  <p className="text-slate-600 dark:text-slate-300 font-mono text-lg">{department.slug}</p>
+                  <h3 className="text-xl font-semibold text-slate-800 dark:text-white mb-3">Department Slug</h3>
+                  <p className="text-slate-600 dark:text-slate-300 font-mono text-xl bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-lg inline-block">{department.slug}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
         
-        {/* Action Cards Section */}
-        {/* <section className="relative z-10 px-4 pb-16">
+        {/* Quick Action Cards */}
+        <section className="relative z-10 px-4 pb-16">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-poppins font-semibold text-center text-slate-800 dark:text-white mb-12">
-              Begin Your Journey in {department.name}
-            </h2> */}
+              Quick Actions
+            </h2>
             
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {actionCards.map((card, index) => {
                 const Icon = card.icon;
                 const BadgeIcon = card.badgeIcon;
@@ -179,50 +179,44 @@ const DepartmentHomepage: React.FC<DepartmentHomepageProps> = ({ department, onT
                         onTabChange('students');
                       }
                     }}
-                    className={`group cursor-pointer rounded-2xl p-8 bg-transparent border-2 ${card.borderColor} hover:border-opacity-80 soft-shadow transform transition-all duration-500 hover:scale-105 hover:soft-shadow-hover flex flex-col items-center justify-center min-h-[320px] animate-soft-scale relative overflow-hidden`}
+                    className={`group cursor-pointer rounded-2xl p-6 bg-transparent border-2 ${card.borderColor} hover:border-opacity-80 soft-shadow transform transition-all duration-500 hover:scale-105 hover:soft-shadow-hover flex flex-col items-center justify-center min-h-[200px] animate-soft-scale relative overflow-hidden`}
                     style={{ animationDelay: `${index * 0.1}s` }}
-                  > */}
-                      {/* Subtle background pattern */}
-                      {/* <div className="absolute inset-0 opacity-5 dark:opacity-10">
-                        <div className="absolute top-4 right-4 w-16 h-16 rounded-full bg-gradient-to-br from-slate-400 to-slate-600 dark:from-slate-300 dark:to-slate-500"></div>
-                        <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-gradient-to-br from-slate-400 to-slate-600 dark:from-slate-300 dark:to-slate-500"></div>
-                      </div> */}
+                  >
+                    {/* Badge */}
+                    <div className="absolute top-3 left-3 flex items-center space-x-1 px-2 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-xs font-poppins font-medium">
+                      <BadgeIcon className="w-3 h-3" />
+                      <span>{card.badge}</span>
+                    </div>
+                    
+                    {/* Main Icon */}
+                    <div className="text-4xl mb-4 group-hover:scale-110 transition-all duration-300 relative z-10">
+                      <Icon className="w-12 h-12" style={{ color: getIconColor(card.gradient) }} />
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="text-center relative z-10">
+                      <h3 className="text-lg font-poppins font-semibold mb-2 text-center text-slate-800 dark:text-white">
+                        {card.title}
+                      </h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-300 text-center leading-relaxed mb-3">
+                        {card.description}
+                      </p>
                       
-                      {/* Badge */}
-                      {/* <div className={`absolute top-4 left-4 flex items-center space-x-1 px-3 py-1 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 text-xs font-poppins font-medium`}>
-                        <BadgeIcon className="w-3 h-3" />
-                        <span>{card.badge}</span>
-                      </div> */}
-                      
-                      {/* Main Icon */}
-                      {/* <div className={`text-6xl mb-6 group-hover:scale-110 transition-all duration-300 relative z-10`}>
-                        <Icon className="w-16 h-16" style={{ color: getIconColor(card.gradient) }} />
-                      </div> */}
-                      
-                      {/* Content */}
-                      {/* <div className="text-center relative z-10">
-                        <h3 className="text-xl font-poppins font-semibold mb-3 text-center text-slate-800 dark:text-white">
-                          {card.title}
-                        </h3>
-                        <p className="text-sm text-slate-600 dark:text-slate-300 text-center leading-relaxed mb-4">
-                          {card.description}
-                        </p> */}
-                        
-                        {/* Arrow indicator */}
-                        {/* <div className="flex items-center justify-center space-x-2 text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors duration-300">
-                          <span className="text-xs font-poppins font-medium">Explore</span>
-                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                        </div>
-                      </div> */}
-                      
-                      {/* Hover glow effect */}
-                      {/* <div className={`absolute inset-0 rounded-2xl ${card.glowColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`}></div>
-                    </button>
+                      {/* Arrow indicator */}
+                      <div className="flex items-center justify-center space-x-2 text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors duration-300">
+                        <span className="text-xs font-poppins font-medium">Explore</span>
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </div>
+                    </div>
+                    
+                    {/* Hover glow effect */}
+                    <div className={`absolute inset-0 rounded-2xl ${card.glowColor} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl`}></div>
+                  </button>
                 );
               })}
             </div>
           </div>
-        </section> */}
+        </section>
       </main>
     </div>
   );

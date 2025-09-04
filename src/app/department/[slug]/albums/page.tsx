@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ImageIcon, ArrowLeft, Building2, Moon, User, Filter, Search, Plus, Heart, MessageCircle, Calendar } from 'lucide-react';
+import { ImageIcon, ArrowLeft, Building2, Moon, User, Filter, Search, Plus, Heart, MessageCircle, Calendar, Sun } from 'lucide-react';
 import { API_CONFIG } from '@/config/api';
 import { getDepartmentAlbums, getDepartmentInfo } from '@/utils/clientApi';
+import { useTheme } from '../../../../components/AppProvider';
 
 interface Department {
   _id: string;
@@ -39,6 +40,7 @@ export default function DepartmentAlbumsRoute() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const categories = ['All', 'Events', 'Lifestyle', 'Academic', 'Sports', 'Social', 'Click'];
 
@@ -87,7 +89,7 @@ export default function DepartmentAlbumsRoute() {
   };
 
   const handleGoHome = () => {
-    router.push('/');
+    router.push(`/department/${departmentSlug}`);
   };
 
   const handleAlbumClick = (album: Album) => {
@@ -214,8 +216,15 @@ export default function DepartmentAlbumsRoute() {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-slate-300 hover:text-white transition-colors">
-                <Moon className="h-5 w-5" />
+              <button 
+                onClick={toggleTheme}
+                className="p-2 text-slate-300 hover:text-white transition-colors"
+              >
+                {theme === 'light' ? (
+                  <Moon className="h-5 w-5" />
+                ) : (
+                  <Sun className="h-5 w-5" />
+                )}
               </button>
               <button className="p-2 text-slate-300 hover:text-white transition-colors">
                 <User className="h-5 w-5" />
@@ -239,53 +248,9 @@ export default function DepartmentAlbumsRoute() {
             </p>
           </div>
 
-          {/* Controls Section - EXACT PhotosPage styling */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
-            {/* Search Bar - EXACT PhotosPage styling */}
-            <div className="relative max-w-md w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
-              <input
-                type="text"
-                placeholder="Search albums..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
-              />
-            </div>
-
-            {/* Filter Dropdown - EXACT PhotosPage styling */}
-            <div className="relative">
-              <button
-                onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className="flex items-center space-x-2 px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl hover:border-purple-300 dark:hover:border-purple-500 transition-all duration-300 font-poppins text-sm text-slate-700 dark:text-slate-300"
-              >
-                <Filter className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                <span>{selectedCategory}</span>
-              </button>
-              
-              {isFilterOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-lg py-2 z-50 border border-slate-200 dark:border-slate-600 soft-shadow animate-soft-scale">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => {
-                        setSelectedCategory(category);
-                        setIsFilterOpen(false);
-                      }}
-                      className={`block w-full text-left px-4 py-3 text-sm font-poppins transition-all duration-300 ${
-                        selectedCategory === category
-                          ? 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30'
-                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Back to Home Button - EXACT PhotosPage styling */}
+          {/* Controls Section */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+            {/* Left side - Back to Home Button */}
             <button
               onClick={handleGoHome}
               className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 font-poppins font-medium soft-shadow hover:soft-shadow-hover"
@@ -293,6 +258,53 @@ export default function DepartmentAlbumsRoute() {
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Home</span>
             </button>
+
+            {/* Right side - Search and Filter */}
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              {/* Search Bar */}
+              <div className="relative max-w-md w-full">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
+                <input
+                  type="text"
+                  placeholder="Search albums..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                />
+              </div>
+
+              {/* Filter Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className="flex items-center space-x-2 px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl hover:border-purple-300 dark:hover:border-purple-500 transition-all duration-300 font-poppins text-sm text-slate-700 dark:text-slate-300"
+                >
+                  <Filter className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                  <span>{selectedCategory}</span>
+                </button>
+                
+                {isFilterOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-lg py-2 z-50 border border-slate-200 dark:border-slate-600 soft-shadow animate-soft-scale">
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          setSelectedCategory(category);
+                          setIsFilterOpen(false);
+                        }}
+                        className={`block w-full text-left px-4 py-3 text-sm font-poppins transition-all duration-300 ${
+                          selectedCategory === category
+                            ? 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30'
+                            : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           {/* Albums Content - EXACT PhotosPage styling */}

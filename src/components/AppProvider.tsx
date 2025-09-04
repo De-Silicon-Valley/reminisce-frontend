@@ -40,22 +40,35 @@ const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   // Initialize theme from localStorage or system preference
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const initialTheme = savedTheme || systemTheme;
-    setTheme(initialTheme);
+    // Check if we're on the client side
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const initialTheme = savedTheme || systemTheme;
+      console.log('Initializing theme:', { savedTheme, systemTheme, initialTheme });
+      setTheme(initialTheme);
+    }
   }, []);
 
   // Apply theme to document
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    localStorage.setItem('theme', theme);
+    if (typeof window !== 'undefined') {
+      console.log('Applying theme to document:', theme);
+      const root = document.documentElement;
+      root.classList.remove('light', 'dark');
+      root.classList.add(theme);
+      localStorage.setItem('theme', theme);
+      console.log('Document classes after theme change:', root.classList.toString());
+    }
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    console.log('Toggle theme called, current theme:', theme);
+    setTheme(prev => {
+      const newTheme = prev === 'light' ? 'dark' : 'light';
+      console.log('Setting theme to:', newTheme);
+      return newTheme;
+    });
   };
 
   return (

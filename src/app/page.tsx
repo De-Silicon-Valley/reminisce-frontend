@@ -14,11 +14,14 @@ import {
   Zap,
   Crown,
   Search,
-  Building
+  Building,
+  Moon,
+  Sun
 } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { API_CONFIG } from '@/config/api';
+import { useTheme } from '../components/AppProvider';
 
 // Helper function to get icon color from gradient
 const getIconColor = (gradient: string) => {
@@ -90,6 +93,7 @@ const HomePage: React.FC = () => {
   const [inputLoading, setInputLoading] = useState(false);
   const [inputError, setInputError] = useState<string | null>(null);
   const router = useRouter();
+  const { theme, toggleTheme } = useTheme();
 
   const handleDepartmentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -152,6 +156,21 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      {/* Theme Toggle Button - Top Right */}
+      <div className="absolute top-4 right-4 z-20">
+        <button
+          onClick={toggleTheme}
+          className="p-3 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 shadow-lg hover:shadow-xl"
+          aria-label="Toggle theme"
+        >
+          {theme === 'light' ? (
+            <Moon className="h-5 w-5" />
+          ) : (
+            <Sun className="h-5 w-5" />
+          )}
+        </button>
+      </div>
+
       {/* Hero Section with Subtle Background */}
       <main className="flex-grow relative overflow-hidden">
         {/* Subtle animated background */}
@@ -160,8 +179,8 @@ const HomePage: React.FC = () => {
         <div className="relative z-10 flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
           <div className="max-w-4xl mx-auto animate-gentle-fade-in">
             {/* Welcome Illustration */}
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-800 dark:to-pink-800 border-4 border-white/50 dark:border-slate-700/50 flex items-center justify-center mb-8 mx-auto soft-shadow">
-              <span className="text-6xl">📖</span>
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-800 dark:to-pink-800 border-4 border-white/50 dark:border-slate-700/50 flex items-center justify-center mb-8 mx-auto soft-shadow hover:scale-110 transition-transform duration-300 cursor-pointer group">
+              <span className="text-6xl group-hover:animate-bounce">📖</span>
             </div>
             
             {/* Main Title */}
@@ -183,15 +202,18 @@ const HomePage: React.FC = () => {
               every moment captured and preserved for you to cherish forever.
             </p>
 
-            {/* Department Input Toggle - Small Button */}
+            {/* Department Input Toggle - Enhanced Button */}
             <div className="mb-8">
               {!showDepartmentInput ? (
                 <button
                   onClick={toggleDepartmentInput}
-                  className="inline-flex items-center px-4 py-2 bg-white/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-colors text-sm font-medium border border-slate-200 dark:border-slate-600 backdrop-blur-sm"
+                  className="group relative inline-flex items-center px-8 py-4 bg-transparent border-2 border-emerald-500 text-white rounded-2xl hover:border-emerald-400 hover:text-white transition-all duration-300 text-base font-semibold soft-shadow transform hover:scale-105 hover:soft-shadow-hover active:scale-95 backdrop-blur-sm overflow-hidden"
                 >
-                  <Building className="h-4 w-4 mr-2" />
-                  Enter Department Name
+                  <Building className="h-5 w-5 mr-3 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
+                  <span className="relative z-10 text-white">
+                    Enter Your Department Name
+                  </span>
+                  <div className="ml-3 w-2 h-2 bg-white/70 rounded-full group-hover:bg-white/90 transition-colors duration-300 relative z-10"></div>
                 </button>
               ) : (
                 <div className="max-w-md mx-auto">
@@ -212,7 +234,7 @@ const HomePage: React.FC = () => {
                       <button
                         type="submit"
                         disabled={inputLoading || !departmentName.trim()}
-                        className="flex-1 px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors font-medium"
+                        className="flex-1 px-6 py-3 bg-transparent border-2 border-emerald-500 text-white rounded-xl hover:border-emerald-400 hover:text-white disabled:border-slate-400 disabled:text-slate-400 disabled:cursor-not-allowed transition-all duration-300 font-semibold soft-shadow hover:soft-shadow-hover transform hover:scale-105 active:scale-95"
                       >
                         {inputLoading ? (
                           <div className="flex items-center justify-center">
@@ -226,7 +248,7 @@ const HomePage: React.FC = () => {
                       <button
                         type="button"
                         onClick={toggleDepartmentInput}
-                        className="px-4 py-3 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                        className="px-6 py-3 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 font-semibold hover:shadow-md"
                       >
                         Cancel
                       </button>

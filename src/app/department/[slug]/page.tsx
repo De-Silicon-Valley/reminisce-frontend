@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Building2, Moon, User } from 'lucide-react';
+import { ArrowLeft, Building2, Moon, User, Sun } from 'lucide-react';
 import { API_CONFIG } from '@/config/api';
 import DepartmentHomepage from '../../../components/DepartmentHomepage';
+import { useTheme } from '../../../components/AppProvider';
 
 interface Department {
   _id: string;
@@ -22,6 +23,7 @@ export default function DepartmentPage() {
   const [department, setDepartment] = useState<Department | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     if (slug) {
@@ -100,6 +102,17 @@ export default function DepartmentPage() {
       <div className="bg-slate-800 dark:bg-slate-900 border-b border-slate-700 dark:border-slate-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
+            {/* Back to Home Button - Top Left */}
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={handleGoHome}
+                className="flex items-center space-x-2 px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-700 rounded-lg transition-all duration-200 group"
+              >
+                <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform duration-200" />
+                <span className="text-sm font-medium">Back to Home</span>
+              </button>
+            </div>
+
             {/* Brand Logo */}
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
@@ -168,8 +181,15 @@ export default function DepartmentPage() {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-slate-300 hover:text-white transition-colors">
-                <Moon className="h-5 w-5" />
+              <button 
+                onClick={toggleTheme}
+                className="p-2 text-slate-300 hover:text-white transition-colors"
+              >
+                {theme === 'light' ? (
+                  <Moon className="h-5 w-5" />
+                ) : (
+                  <Sun className="h-5 w-5" />
+                )}
               </button>
               <button className="p-2 text-slate-300 hover:text-white transition-colors">
                 <User className="h-5 w-5" />
@@ -185,47 +205,8 @@ export default function DepartmentPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50/30 via-pink-50/20 to-blue-50/30 dark:from-purple-900/20 dark:via-pink-900/10 dark:to-blue-900/20 animate-watercolor-float"></div>
         
         <div className="relative z-10">
-          {/* Welcome Section */}
-          <section className="px-4 py-16">
-            <div className="max-w-4xl mx-auto text-center animate-gentle-fade-in">
-              {/* Welcome Illustration */}
-              <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-800 dark:to-pink-800 border-4 border-white/50 dark:border-slate-700/50 flex items-center justify-center mb-8 mx-auto soft-shadow">
-                <Building2 className="h-16 w-16 text-purple-600" />
-              </div>
-              
-              {/* Main Title */}
-              <h1 className="text-5xl font-poppins font-bold mb-4 text-slate-800 dark:text-white">
-                Welcome to{' '}
-                <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
-                  {department.name}
-                </span>
-              </h1>
-              
-              {/* Department Code */}
-              <p className="text-xl font-poppins font-light mb-6 text-slate-600 dark:text-slate-300">
-                Department Code: {department.code}
-              </p>
-              
-              {/* Description */}
-              {department.description && (
-                <p className="text-lg font-poppins text-slate-500 dark:text-slate-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-                  {department.description}
-                </p>
-              )}
-              
-              {/* Back to Home Button */}
-              <button
-                onClick={handleGoHome}
-                className="inline-flex items-center px-6 py-3 bg-white/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-white dark:hover:bg-slate-800 transition-all duration-200 text-sm font-medium border border-slate-200 dark:border-slate-600 backdrop-blur-sm shadow-lg hover:shadow-xl"
-              >
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Home
-              </button>
-            </div>
-          </section>
-
           {/* Department Content */}
-          <section className="px-4 pb-16">
+          <section className="px-4 py-8">
             <div className="max-w-7xl mx-auto">
               {department && (
                 <DepartmentHomepage 

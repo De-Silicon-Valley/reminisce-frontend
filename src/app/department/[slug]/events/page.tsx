@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Calendar, ArrowLeft, Building2, Moon, User, Filter, Grid, List, MapPin, Users, Clock } from 'lucide-react';
+import { Calendar, ArrowLeft, Building2, Moon, User, Filter, Grid, List, MapPin, Users, Clock, Sun } from 'lucide-react';
 import { API_CONFIG } from '@/config/api';
 import { getDepartmentEvents, getDepartmentInfo } from '@/utils/clientApi';
+import { useTheme } from '../../../../components/AppProvider';
 
 interface Department {
   _id: string;
@@ -37,7 +38,7 @@ export default function DepartmentEventsRoute() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     if (departmentSlug) {
@@ -81,13 +82,9 @@ export default function DepartmentEventsRoute() {
   };
 
   const handleGoHome = () => {
-    router.push('/');
+    router.push(`/department/${departmentSlug}`);
   };
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    // You can add localStorage persistence here if needed
-  };
 
   const formatEventDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -155,7 +152,7 @@ export default function DepartmentEventsRoute() {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col ${isDarkMode ? 'dark' : ''} bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900`}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <div className="bg-slate-800 dark:bg-slate-900 border-b border-slate-700 dark:border-slate-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
@@ -229,7 +226,11 @@ export default function DepartmentEventsRoute() {
                 onClick={toggleTheme}
                 className="p-2 text-slate-300 hover:text-white transition-colors"
               >
-                <Moon className="h-5 w-5" />
+                {theme === 'light' ? (
+                  <Moon className="h-5 w-5" />
+                ) : (
+                  <Sun className="h-5 w-5" />
+                )}
               </button>
               <button className="p-2 text-slate-300 hover:text-white transition-colors">
                 <User className="h-5 w-5" />

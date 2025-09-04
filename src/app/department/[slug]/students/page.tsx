@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { User, ArrowLeft, Moon, Plus, Search, Filter, Mail, Phone, Quote, UserCheck, AlertCircle } from 'lucide-react';
+import { User, ArrowLeft, Moon, Plus, Search, Filter, Mail, Phone, Quote, UserCheck, AlertCircle, Sun } from 'lucide-react';
 import { getDepartmentStudents, getDepartmentInfo, updateStudentProfile } from '@/utils/clientApi';
+import { useTheme } from '../../../../components/AppProvider';
 
 interface Department {
   _id: string;
@@ -45,6 +46,7 @@ export default function DepartmentStudentsRoute() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const { theme, toggleTheme } = useTheme();
   
   // Reference number verification modal
   const [showRefModal, setShowRefModal] = useState(false);
@@ -108,7 +110,7 @@ export default function DepartmentStudentsRoute() {
   };
 
   const handleGoHome = () => {
-    router.push('/');
+    router.push(`/department/${departmentSlug}`);
   };
 
   const handleAddStudent = () => {
@@ -314,8 +316,15 @@ export default function DepartmentStudentsRoute() {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-slate-300 hover:text-white transition-colors">
-                <Moon className="h-5 w-5" />
+              <button 
+                onClick={toggleTheme}
+                className="p-2 text-slate-300 hover:text-white transition-colors"
+              >
+                {theme === 'light' ? (
+                  <Moon className="h-5 w-5" />
+                ) : (
+                  <Sun className="h-5 w-5" />
+                )}
               </button>
               <button className="p-2 text-slate-300 hover:text-white transition-colors">
                 <User className="h-5 w-5" />
@@ -340,36 +349,38 @@ export default function DepartmentStudentsRoute() {
           </div>
 
           {/* Controls Section */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
-            {/* Search Bar */}
-            <div className="relative max-w-md w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
-              <input
-                type="text"
-                placeholder="Search classmates..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
-              />
-            </div>
-
-            {/* Add Student Button */}
-            <button
-              onClick={handleAddStudent}
-              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 font-poppins font-medium shadow-lg hover:shadow-xl"
-            >
-              <Plus className="h-4 w-4" />
-              <span>Add Your Info</span>
-            </button>
-
-            {/* Back to Home Button */}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+            {/* Left side - Back to Home Button */}
             <button
               onClick={handleGoHome}
-              className="flex items-center space-x-2 px-6 py-3 bg-slate-600 text-white rounded-xl hover:bg-slate-700 transition-all duration-300 font-poppins font-medium"
+              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 font-poppins font-medium soft-shadow hover:soft-shadow-hover"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Home</span>
             </button>
+
+            {/* Right side - Search and Add Student */}
+            <div className="flex flex-col sm:flex-row items-center gap-4">
+              {/* Search Bar */}
+              <div className="relative max-w-md w-full">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
+                <input
+                  type="text"
+                  placeholder="Search classmates..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                />
+              </div>
+
+              {/* Add Student Button */}
+              <button
+                onClick={handleAddStudent}
+                className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 font-poppins font-medium shadow-lg hover:shadow-xl whitespace-nowrap"
+              >
+                Add Your Info
+              </button>
+            </div>
           </div>
 
           {/* Students Content */}
