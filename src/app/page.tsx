@@ -207,13 +207,13 @@ const HomePage: React.FC = () => {
               {!showDepartmentInput ? (
                 <button
                   onClick={toggleDepartmentInput}
-                  className="group relative inline-flex items-center px-8 py-4 bg-transparent border-2 border-emerald-500 text-white rounded-2xl hover:border-emerald-400 hover:text-white transition-all duration-300 text-base font-semibold soft-shadow transform hover:scale-105 hover:soft-shadow-hover active:scale-95 backdrop-blur-sm overflow-hidden"
+                  className="group relative inline-flex items-center px-8 py-4 bg-transparent border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-2xl hover:border-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-all duration-300 text-base font-semibold soft-shadow transform hover:scale-105 hover:soft-shadow-hover active:scale-95 backdrop-blur-sm overflow-hidden"
                 >
                   <Building className="h-5 w-5 mr-3 group-hover:rotate-12 transition-transform duration-300 relative z-10" />
-                  <span className="relative z-10 text-white">
+                  <span className="relative z-10 text-emerald-600 dark:text-emerald-400">
                     Enter Your Department Name
                   </span>
-                  <div className="ml-3 w-2 h-2 bg-white/70 rounded-full group-hover:bg-white/90 transition-colors duration-300 relative z-10"></div>
+                  <div className="ml-3 w-2 h-2 bg-emerald-500/60 rounded-full group-hover:bg-emerald-500/80 transition-colors duration-300 relative z-10"></div>
                 </button>
               ) : (
                 <div className="max-w-md mx-auto">
@@ -234,11 +234,11 @@ const HomePage: React.FC = () => {
                       <button
                         type="submit"
                         disabled={inputLoading || !departmentName.trim()}
-                        className="flex-1 px-6 py-3 bg-transparent border-2 border-emerald-500 text-white rounded-xl hover:border-emerald-400 hover:text-white disabled:border-slate-400 disabled:text-slate-400 disabled:cursor-not-allowed transition-all duration-300 font-semibold soft-shadow hover:soft-shadow-hover transform hover:scale-105 active:scale-95"
+                        className="flex-1 px-6 py-3 bg-transparent border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-xl hover:border-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 disabled:border-slate-400 disabled:text-slate-400 disabled:cursor-not-allowed transition-all duration-300 font-semibold soft-shadow hover:soft-shadow-hover transform hover:scale-105 active:scale-95"
                       >
                         {inputLoading ? (
-                          <div className="flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          <div className="flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600 dark:border-emerald-400 mr-2"></div>
                             Finding Department...
                           </div>
                         ) : (
