@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Send, CheckCircle, AlertCircle, MessageSquare, Bug, Lightbulb, User, Mail, Moon, ArrowLeft, UserCheck } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, MessageSquare, Bug, Lightbulb, User, Mail, Moon, Sun, ArrowLeft, UserCheck } from 'lucide-react';
 import { API_CONFIG } from '@/config/api';
 import { createDepartmentReport, getDepartmentInfo, ensureDepartmentInfo } from '@/utils/clientApi';
 import { ErrorMessages, getErrorMessage } from '@/utils/errorMessages';
+import { useTheme } from '@/components/AppProvider';
 
 interface Department {
   _id: string;
@@ -24,11 +25,11 @@ export default function DepartmentReportsRoute() {
   const params = useParams();
   const router = useRouter();
   const departmentSlug = params?.slug as string;
+  const { theme, toggleTheme } = useTheme();
   
   const [department, setDepartment] = useState<Department | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(false); // Light theme as default
   
   const [formData, setFormData] = useState<ReportForm>({
     title: '',
@@ -73,7 +74,7 @@ export default function DepartmentReportsRoute() {
   };
 
   const handleGoHome = () => {
-    router.push('/');
+    router.push(`/department/${departmentSlug}`);
   };
 
   const startReportProcess = () => {
@@ -82,10 +83,6 @@ export default function DepartmentReportsRoute() {
     setRefError(null);
   };
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    // You can add localStorage persistence here if needed
-  };
 
   const handleInputChange = (field: keyof ReportForm, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -229,7 +226,7 @@ export default function DepartmentReportsRoute() {
   }
 
   return (
-    <div className={`min-h-screen flex flex-col ${isDarkMode ? 'dark' : ''} bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900`}>
+    <div className={`min-h-screen flex flex-col ${theme === 'dark' ? 'dark' : ''} bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900`}>
       {/* Top Navigation Bar - Light Theme Optimized */}
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-600 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -305,8 +302,13 @@ export default function DepartmentReportsRoute() {
               <button 
                 onClick={toggleTheme}
                 className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                aria-label="Toggle theme"
               >
-                <Moon className="h-5 w-5" />
+                {theme === 'dark' ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
               </button>
               <button className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors">
                 <User className="h-5 w-5" />
@@ -327,6 +329,17 @@ export default function DepartmentReportsRoute() {
             <p className="text-lg font-poppins text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
               Having a problem or something to share? We&apos;re here to listen and help.
             </p>
+          </div>
+
+          {/* Back to Home Button */}
+          <div className="mb-8">
+            <button
+              onClick={handleGoHome}
+              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 font-poppins font-medium soft-shadow hover:soft-shadow-hover"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Back to Home</span>
+            </button>
           </div>
 
           {/* Main Content - EXACT ReportsPage styling */}

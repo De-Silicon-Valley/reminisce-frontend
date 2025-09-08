@@ -113,14 +113,14 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 px-4">
       <div className="max-w-md w-full">
-        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
           {/* Back Button */}
           {onBack && (
             <button
               onClick={onBack}
-              className="mb-6 flex items-center space-x-2 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100 transition-colors duration-300"
+              className="mb-6 flex items-center space-x-2 text-slate-600 hover:text-slate-800 transition-colors duration-300"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -138,10 +138,10 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
                 <User className="h-8 w-8 text-white" />
               )}
             </div>
-            <h1 className="text-2xl font-poppins font-bold text-slate-800 dark:text-white mb-2">
+            <h1 className="text-2xl font-poppins font-bold text-slate-800 mb-2">
               {isSignup ? 'Admin Signup' : 'Admin Login'}
             </h1>
-            <p className="text-slate-600 dark:text-slate-300 font-poppins">
+            <p className="text-slate-600 font-poppins">
               {isSignup 
                 ? 'Create your first admin account' 
                 : 'Sign in to access admin features'
@@ -151,31 +151,31 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
 
           {/* Success Message */}
           {success && (
-            <div className="flex items-center space-x-2 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl mb-6">
-              <div className="h-5 w-5 text-green-500 dark:text-green-400 flex-shrink-0">
+            <div className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-xl mb-6">
+              <div className="h-5 w-5 text-green-500 flex-shrink-0">
                 <svg fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
-              <p className="text-sm font-poppins text-green-600 dark:text-green-400">{success}</p>
+              <p className="text-sm font-poppins text-green-600">{success}</p>
             </div>
           )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm font-poppins font-medium text-slate-700 dark:text-slate-200 mb-2">
+              <label htmlFor="username" className="block text-sm font-poppins font-medium text-slate-700 mb-2">
                 Username
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <input
                   id="username"
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter your username"
-                  className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 placeholder-slate-500"
                   disabled={isLoading}
                   required
                 />
@@ -183,18 +183,18 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-poppins font-medium text-slate-700 dark:text-slate-200 mb-2">
+              <label htmlFor="password" className="block text-sm font-poppins font-medium text-slate-700 mb-2">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <input
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 placeholder-slate-500"
                   disabled={isLoading}
                   required
                 />
@@ -205,18 +205,18 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
             {isSignup && (
               <>
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-poppins font-medium text-slate-700 dark:text-slate-200 mb-2">
+                  <label htmlFor="confirmPassword" className="block text-sm font-poppins font-medium text-slate-700 mb-2">
                     Confirm Password
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
                     <input
                       id="confirmPassword"
                       type="password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Confirm your password"
-                      className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                      className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 placeholder-slate-500"
                       disabled={isLoading}
                       required
                     />
@@ -224,25 +224,25 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
                 </div>
                 
                 {/* Department Information */}
-                <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
-                  <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-4">
+                <div className="mt-6 pt-6 border-t border-slate-200">
+                  <h3 className="text-sm font-semibold text-slate-800 mb-4">
                     Department Information
                   </h3>
                   
                   <div className="space-y-4">
                     <div>
-                      <label htmlFor="departmentName" className="block text-sm font-poppins font-medium text-slate-700 dark:text-slate-200 mb-2">
+                      <label htmlFor="departmentName" className="block text-sm font-poppins font-medium text-slate-700 mb-2">
                         Department Name
                       </label>
                       <div className="relative">
-                        <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
+                        <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
                         <input
                           id="departmentName"
                           type="text"
                           value={departmentName}
                           onChange={(e) => handleDepartmentNameChange(e.target.value)}
                           placeholder="e.g., Computer Science"
-                          className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                          className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 placeholder-slate-500"
                           disabled={isLoading}
                           required
                         />
@@ -250,18 +250,18 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
                     </div>
                     
                     <div>
-                      <label htmlFor="departmentCode" className="block text-sm font-poppins font-medium text-slate-700 dark:text-slate-200 mb-2">
+                      <label htmlFor="departmentCode" className="block text-sm font-poppins font-medium text-slate-700 mb-2">
                         Department Code
                       </label>
                       <div className="relative">
-                        <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
+                        <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
                         <input
                           id="departmentCode"
                           type="text"
                           value={departmentCode}
                           onChange={(e) => setDepartmentCode(e.target.value)}
                           placeholder="e.g., CS"
-                          className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                          className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 placeholder-slate-500"
                           disabled={isLoading}
                           required
                         />
@@ -276,9 +276,9 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
 
             {/* Error Message */}
             {error && (
-              <div className="flex items-center space-x-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
-                <AlertCircle className="h-5 w-5 text-red-500 dark:text-red-400 flex-shrink-0" />
-                <p className="text-sm font-poppins text-red-600 dark:text-red-400">{error}</p>
+              <div className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-xl">
+                <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
+                <p className="text-sm font-poppins text-red-600">{error}</p>
               </div>
             )}
 
@@ -306,7 +306,7 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
           <div className="mt-6 text-center">
             <button
               onClick={toggleMode}
-              className="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 text-sm font-poppins underline transition-colors duration-300"
+              className="text-purple-600 hover:text-purple-700 text-sm font-poppins underline transition-colors duration-300"
             >
               {isSignup 
                 ? 'Already have an account? Sign in' 
@@ -317,11 +317,11 @@ const AdminAuth: React.FC<AdminAuthProps> = ({ onSuccess, onBack }) => {
 
           {/* First Time Setup Info */}
           {isSignup && (
-            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
-              <h3 className="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-2">
+            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+              <h3 className="text-sm font-semibold text-blue-800 mb-2">
                 First Time Setup
               </h3>
-              <p className="text-xs text-blue-700 dark:text-blue-300">
+              <p className="text-xs text-blue-700">
                 This will create your admin account and department. Each admin can manage one department. The department URL slug will be used to create a shareable link for students.
               </p>
             </div>

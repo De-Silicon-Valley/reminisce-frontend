@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { User, ArrowLeft, Moon, Plus, Search, Filter, Mail, Phone, Quote, UserCheck, AlertCircle } from 'lucide-react';
+import { User, ArrowLeft, Moon, Sun, Plus, Search, Filter, Mail, Phone, Quote, UserCheck, AlertCircle } from 'lucide-react';
 import { getDepartmentStudents, getDepartmentInfo, updateStudentProfile, ensureDepartmentInfo } from '@/utils/clientApi';
 import { ErrorMessages, getErrorMessage } from '@/utils/errorMessages';
 import ImageUpload from '@/components/ImageUpload';
 import { CloudinaryUploadResult } from '@/utils/cloudinary';
+import { useTheme } from '@/components/AppProvider';
 
 interface Department {
   _id: string;
@@ -42,6 +43,7 @@ export default function DepartmentStudentsRoute() {
   const params = useParams();
   const router = useRouter();
   const departmentSlug = params?.slug as string;
+  const { theme, toggleTheme } = useTheme();
   
   const [department, setDepartment] = useState<Department | null>(null);
   const [students, setStudents] = useState<Student[]>([]);
@@ -112,7 +114,7 @@ export default function DepartmentStudentsRoute() {
   };
 
   const handleGoHome = () => {
-    router.push('/');
+    router.push(`/department/${departmentSlug}`);
   };
 
   const handleAddStudent = () => {
@@ -264,8 +266,8 @@ export default function DepartmentStudentsRoute() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-      {/* Top Navigation Bar */}
-      <div className="bg-slate-800 dark:bg-slate-900 border-b border-slate-700 dark:border-slate-600">
+      {/* Top Navigation Bar - Light Theme Optimized */}
+      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-600 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             {/* Brand Logo */}
@@ -273,14 +275,14 @@ export default function DepartmentStudentsRoute() {
               <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-sm">R</span>
               </div>
-              <span className="text-white font-bold text-xl font-poppins">REMINISCE</span>
+              <span className="text-slate-800 dark:text-white font-bold text-xl font-poppins">REMINISCE</span>
             </div>
 
-            {/* Main Navigation Tabs */}
-            <div className="flex space-x-1 bg-slate-700 dark:bg-slate-800 p-1 rounded-lg">
+            {/* Main Navigation Tabs - Light Theme Colors */}
+            <div className="flex space-x-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg border border-slate-200 dark:border-slate-600">
               <button
                 onClick={() => router.push(`/department/${departmentSlug}`)}
-                className="flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
+                className="flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-white dark:hover:bg-slate-700 transition-all duration-200 border border-transparent hover:border-slate-300 dark:hover:border-slate-500"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -289,7 +291,7 @@ export default function DepartmentStudentsRoute() {
               </button>
               <button
                 onClick={() => router.push(`/department/${departmentSlug}/albums`)}
-                className="flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
+                className="flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-white dark:hover:bg-slate-700 transition-all duration-200 border border-transparent hover:border-slate-300 dark:hover:border-slate-500"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
@@ -298,7 +300,7 @@ export default function DepartmentStudentsRoute() {
               </button>
               <button
                 onClick={() => router.push(`/department/${departmentSlug}/events`)}
-                className="flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
+                className="flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-white dark:hover:bg-slate-700 transition-all duration-200 border border-transparent hover:border-slate-300 dark:hover:border-slate-500"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
@@ -316,7 +318,7 @@ export default function DepartmentStudentsRoute() {
               </button>
               <button
                 onClick={() => router.push(`/department/${departmentSlug}/reports`)}
-                className="flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
+                className="flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white hover:bg-white dark:hover:bg-slate-700 transition-all duration-200 border border-transparent hover:border-slate-300 dark:hover:border-slate-500"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
@@ -327,12 +329,20 @@ export default function DepartmentStudentsRoute() {
 
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
-              <button className="p-2 text-slate-300 hover:text-white transition-colors">
-                <Moon className="h-5 w-5" />
+              <button 
+                onClick={toggleTheme}
+                className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
               </button>
-              <button className="p-2 text-slate-300 hover:text-white transition-colors">
+              <button className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white transition-colors">
                 <User className="h-5 w-5" />
-              </button>
+            </button>
             </div>
           </div>
         </div>
@@ -353,36 +363,37 @@ export default function DepartmentStudentsRoute() {
           </div>
 
           {/* Controls Section */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
-            {/* Search Bar */}
-            <div className="relative max-w-md w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
-              <input
-                type="text"
-                placeholder="Search classmates..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
-              />
-            </div>
-
-            {/* Add Student Button */}
-            <button
-              onClick={handleAddStudent}
-              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 font-poppins font-medium shadow-lg hover:shadow-xl"
-            >
-              <Plus className="h-4 w-4" />
-              <span>Add Your Info</span>
-            </button>
-
-            {/* Back to Home Button */}
+          <div className="flex justify-between items-center mb-8">
             <button
               onClick={handleGoHome}
-              className="flex items-center space-x-2 px-6 py-3 bg-slate-600 text-white rounded-xl hover:bg-slate-700 transition-all duration-300 font-poppins font-medium"
+              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 font-poppins font-medium soft-shadow hover:soft-shadow-hover"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Home</span>
             </button>
+
+            <div className="flex items-center gap-4">
+              {/* Search Bar */}
+              <div className="relative max-w-md w-full">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 dark:text-slate-500" />
+                <input
+                  type="text"
+                  placeholder="Search classmates..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-poppins text-sm transition-all duration-300 text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+                />
+              </div>
+
+              {/* Add Student Button */}
+              <button
+                onClick={handleAddStudent}
+                className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl hover:from-purple-600 hover:to-purple-700 transition-all duration-300 font-poppins font-medium shadow-lg hover:shadow-xl whitespace-nowrap"
+              >
+                <Plus className="h-4 w-4" />
+                <span>Add Your Info</span>
+              </button>
+            </div>
           </div>
 
           {/* Students Content */}

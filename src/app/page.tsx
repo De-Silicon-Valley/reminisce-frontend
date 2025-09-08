@@ -14,13 +14,16 @@ import {
   Zap,
   Crown,
   Search,
-  Building
+  Building,
+  Moon,
+  Sun
 } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { API_CONFIG } from '@/config/api';
 import { saveDepartmentInfo, DepartmentInfo } from '@/utils/clientApi';
 import { ErrorMessages, getErrorMessage } from '@/utils/errorMessages';
+import { useTheme } from '@/components/AppProvider';
 
 // Helper function to get icon color from gradient
 const getIconColor = (gradient: string) => {
@@ -88,6 +91,7 @@ const HomePage: React.FC = () => {
   const [inputLoading, setInputLoading] = useState(false);
   const [inputError, setInputError] = useState<string | null>(null);
   const router = useRouter();
+  const { theme, toggleTheme } = useTheme();
 
   const handleDepartmentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,6 +154,21 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-purple-50 via-lavender-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      {/* Theme Toggle Button */}
+      <div className="absolute top-4 right-4 z-20">
+        <button
+          onClick={toggleTheme}
+          className="p-3 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? (
+            <Sun className="h-5 w-5 text-amber-500" />
+          ) : (
+            <Moon className="h-5 w-5 text-slate-600" />
+          )}
+        </button>
+      </div>
+
       {/* Hero Section with Subtle Background */}
       <main className="flex-grow relative overflow-hidden">
         {/* Clean background */}
